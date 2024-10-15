@@ -5,7 +5,7 @@ function iti_cabinet_enqueue_styles() {
     $current_action = get_query_var('iti_cabinet_action');
 
     // Подключаем стили только на страницах кабинета
-    if (in_array($current_action, ['profile', 'profile_edit', 'orders'])) {
+    if (in_array($current_action, ['profile', 'profile_edit', 'orders', 'login', 'register'])) {
         wp_enqueue_style(
             'iti-cabinet-style', // Уникальное имя стиля
             plugin_dir_url(__FILE__) . 'css/iti-cabinet-style.css', // Путь к файлу стилей

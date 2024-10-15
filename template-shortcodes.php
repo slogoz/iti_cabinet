@@ -10,13 +10,13 @@ function iti_cabinet_profile_page() {
         <ul>
             <li><a href="<?php echo esc_url(home_url('/profile-edit')); ?>">Редактировать профиль</a></li>
             <li><a href="<?php echo esc_url(home_url('/orders')); ?>">История заказов</a></li>
-            <li><a href="<?php echo wp_logout_url(); ?>">Выйти</a></li>
+            <li><a href="<?php echo wp_logout_url(site_url('/login')); ?>">Выйти</a></li>
         </ul>
 
         <?php
         return ob_get_clean();
     } else {
-        return '<p>Пожалуйста, <a href="' . wp_login_url() . '">войдите</a>, чтобы получить доступ к вашему профилю.</p>';
+        return '<p>Пожалуйста, <a href="' . iti_cabinet_login_url() . '">войдите</a>, чтобы получить доступ к вашему профилю.</p>';
     }
 }
 
