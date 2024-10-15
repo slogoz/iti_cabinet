@@ -24,7 +24,6 @@ function iti_cabinet_custom_template($template)
 
 function iti_cabinet_template_redirect()
 {
-    error_log('GET parameters in custom route: ' . print_r($_GET, true));
     global $wp_query;
 
     $actions = array(
@@ -109,7 +108,6 @@ add_action('init', 'iti_cabinet_rewrite_rules');
 function iti_cabinet_query_vars($vars)
 {
     $vars[] = 'iti_cabinet_action';
-    $vars[] = 'error';
     return $vars;
 }
 
@@ -122,11 +120,11 @@ function iti_cabinet_flush_rewrite_rules()
     flush_rewrite_rules();       // Перестроить правила маршрутизации
 }
 
-function iti_cabinet_handle_login()
+function iti_cabinet_handle_email()
 {
-    if (isset($_POST['iti_login_nonce']) && wp_verify_nonce($_POST['iti_login_nonce'], 'iti_login_action')) {
+    if (isset($_POST['iti_email_nonce']) && wp_verify_nonce($_POST['iti_email_nonce'], 'iti_email_action')) {
         $creds = array(
-            'user_login' => $_POST['log'],
+            'user_email' => $_POST['email'],
             'user_password' => $_POST['pwd'],
             'remember' => isset($_POST['rememberme']) ? true : false,
         );
@@ -135,7 +133,7 @@ function iti_cabinet_handle_login()
 
         if (is_wp_error($user)) {
             // Если произошла ошибка авторизации
-            wp_redirect(site_url('/login?login=failed'));
+            wp_redirect(site_url('/login?email=failed'));
             exit;
         } else {
             // Если логин успешен
@@ -145,7 +143,7 @@ function iti_cabinet_handle_login()
     }
 }
 
-add_action('init', 'iti_cabinet_handle_login');
+add_action('init', 'iti_cabinet_handle_email');
 
 function iti_cabinet_login_url($redirect = '') {
     // Возвращаем URL страницы логина с опциональным редиректом после входа
@@ -154,4 +152,21 @@ function iti_cabinet_login_url($redirect = '') {
         $login_url = add_query_arg('redirect_to', urlencode($redirect), $login_url);
     }
     return $login_url;
+}
+
+add_action('admin_init', 'restrict_admin_access');
+
+function restrict_admin_access() {
+    // Получаем текущего пользователя
+    $current_user = wp_get_current_user();
+
+    // Проверяем, есть ли у пользователя права на доступ к админке
+    if (in_array('subscriber', (array) $current_user->roles)) {
+        // Если это не AJAX-запрос и не происходит выход из системы
+        if (!defined('DOING_AJAX') || !DOING_AJAX) {
+            // Перенаправляем на главную страницу профиля в кабинет
+            wp_redirect(site_url('/profile'));
+            exit;
+        }
+    }
 }
