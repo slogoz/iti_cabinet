@@ -13,6 +13,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+include plugin_dir_path(__FILE__) . 'assets.php';
 include plugin_dir_path(__FILE__) . 'template-route.php';
 include plugin_dir_path(__FILE__) . 'template-shortcodes.php';
 

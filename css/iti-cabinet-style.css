@@ -1,0 +1,17 @@
+.iti-cabinet-header ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+}
+.iti-cabinet-header ul li {
+    display: inline;
+}
+.iti-cabinet-header ul li a {
+    text-decoration: none;
+    color: #0073aa;
+}
+.iti-cabinet-header ul li a:hover {
+    color: #005177;
+}
