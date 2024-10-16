@@ -47,7 +47,7 @@ include(plugin_dir_path(__FILE__) . 'cabinet-header.php');
 
 <div class="iti-login-form">
     <h2>Вход в аккаунт</h2>
-    <?php if (isset($_GET['login']) && $_GET['login'] == 'failed'): ?>
+    <?php if (isset($_GET['email']) && $_GET['email'] == 'failed'): ?>
         <p style="color: red;">Ошибка: неверный email или пароль.</p>
     <?php endif; ?>
 
@@ -71,6 +71,7 @@ include(plugin_dir_path(__FILE__) . 'cabinet-header.php');
         </p>
     </form>
 
+    <p><a href="<?php echo site_url('/password-reset'); ?>">Забыли пароль?</a></p>
     <p>Нет аккаунта? <a href="<?php echo site_url('/register'); ?>">Зарегистрироваться</a></p>
 </div>
 

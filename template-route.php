@@ -26,6 +26,8 @@ function iti_cabinet_template_redirect()
 {
     global $wp_query;
 
+    $action = get_query_var('iti_cabinet_action');
+
     $actions = array(
         'profile',
         'profile_edit',
@@ -36,19 +38,23 @@ function iti_cabinet_template_redirect()
         wp_redirect(site_url('/login'));
         exit;
     }
+    if ($action == 'password_reset') {
+        iti_cabinet_load_template('password-reset.php');
+        exit;
+    }
 
     // Проверка и подмена шаблонов на основе query var
-    if (get_query_var('iti_cabinet_action') == 'profile') {
+    if ($action == 'profile') {
         iti_cabinet_load_template('profile-template.php');
         exit;
     }
 
-    if (get_query_var('iti_cabinet_action') == 'profile_edit') {
+    if ($action == 'profile_edit') {
         iti_cabinet_load_template('profile-edit-template.php');
         exit;
     }
 
-    if (get_query_var('iti_cabinet_action') == 'orders') {
+    if ($action == 'orders') {
         iti_cabinet_load_template('orders-template.php');
         exit;
     }
@@ -58,19 +64,19 @@ function iti_cabinet_template_redirect()
         'register'
     );
 
-    if (is_user_logged_in() && in_array(get_query_var('iti_cabinet_action'), $actions)) {
+    if (is_user_logged_in() && in_array($action, $actions)) {
         wp_redirect(site_url('/profile'));
         exit;
     }
 
     // Страница входа
-    if (get_query_var('iti_cabinet_action') == 'login') {
+    if ($action == 'login') {
         iti_cabinet_load_template('login-template.php');
         exit;
     }
 
     // Страница регистрации
-    if (get_query_var('iti_cabinet_action') == 'register') {
+    if ($action == 'register') {
         iti_cabinet_load_template('register-template.php');
         exit;
     }
@@ -100,6 +106,8 @@ function iti_cabinet_rewrite_rules()
     add_rewrite_rule('^login/?$', 'index.php?iti_cabinet_action=login', 'top');
     add_rewrite_rule('^register/?$', 'index.php?iti_cabinet_action=register', 'top');
 
+    // Страница сброса пароля
+    add_rewrite_rule('^password-reset/?$', 'index.php?iti_cabinet_action=password_reset', 'top');
 }
 
 add_action('init', 'iti_cabinet_rewrite_rules');
@@ -166,6 +174,39 @@ function restrict_admin_access() {
         if (!defined('DOING_AJAX') || !DOING_AJAX) {
             // Перенаправляем на главную страницу профиля в кабинет
             wp_redirect(site_url('/profile'));
+            exit;
+        }
+    }
+}
+
+add_action('init', 'handle_password_reset_request_new_page');
+
+function handle_password_reset_request_new_page() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_email'])) {
+        $email = sanitize_email($_POST['user_email']);
+        $user = get_user_by('email', $email);
+
+        if ($user) {
+            // Генерация токена
+            $token = bin2hex(random_bytes(16));
+            update_user_meta($user->ID, 'password_reset_token', $token);
+
+            // Формирование ссылки для сброса пароля
+            $reset_link = add_query_arg(['token' => $token], site_url('/password-reset'));
+
+            // Отправка email
+            $subject = 'Сброс пароля';
+            $message = 'Перейдите по следующей ссылке, чтобы сбросить пароль: ' . $reset_link;
+            wp_mail($email, $subject, $message);
+
+            error_log('|reset password link: ' . $reset_link);
+
+            // Сообщение об успешной отправке
+            wp_redirect(home_url('/password-reset?reset_email_sent=true'));
+            exit;
+        } else {
+            // Обработка случая, если email не найден
+            wp_redirect(home_url('/password-reset?reset_email_sent=false'));
             exit;
         }
     }
