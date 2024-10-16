@@ -10,6 +10,7 @@ get_header(); ?>
 <div class="iti-profile-edit">
     <h1>Редактирование профиля</h1>
     <?php echo do_shortcode('[iti_cabinet_profile_edit]'); ?>
+    <p><a href="<?php echo site_url('/password-change'); ?>">Сменить пароль</a></p>
 </div>
 
 <?php get_footer(); ?>

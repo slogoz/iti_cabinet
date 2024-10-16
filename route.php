@@ -1,5 +1,5 @@
 <?php
-
+/*
 function iti_cabinet_custom_template($template)
 {
     // Проверка для страницы профиля
@@ -19,7 +19,7 @@ function iti_cabinet_custom_template($template)
 
     return $template;
 }
-
+*/
 //add_filter('template_include', 'iti_cabinet_custom_template');
 
 function iti_cabinet_template_redirect()
@@ -31,7 +31,8 @@ function iti_cabinet_template_redirect()
     $actions = array(
         'profile',
         'profile_edit',
-        'orders'
+        'orders',
+        'password_change'
     );
 
     if (!is_user_logged_in() && in_array(get_query_var('iti_cabinet_action'), $actions)) {
@@ -80,6 +81,12 @@ function iti_cabinet_template_redirect()
         iti_cabinet_load_template('register-template.php');
         exit;
     }
+
+    // Страница смены пароля
+    if ($action == 'password_change') {
+        iti_cabinet_load_template('password-change.php');
+        exit;
+    }
 }
 
 add_action('template_redirect', 'iti_cabinet_template_redirect');
@@ -108,6 +115,9 @@ function iti_cabinet_rewrite_rules()
 
     // Страница сброса пароля
     add_rewrite_rule('^password-reset/?$', 'index.php?iti_cabinet_action=password_reset', 'top');
+
+    // Страница смены пароля
+    add_rewrite_rule('^password-change/?$', 'index.php?iti_cabinet_action=password_change', 'top');
 }
 
 add_action('init', 'iti_cabinet_rewrite_rules');
