@@ -4,17 +4,17 @@ function iti_cabinet_custom_template($template)
 {
     // Проверка для страницы профиля
     if (is_page('profile') && !locate_template('page-profile.php')) {
-        return plugin_dir_path(__FILE__) . 'templates/profile-template.php';
+        return plugin_dir_path(__FILE__) . 'templates/page-profile.php';
     }
 
     // Проверка для страницы редактирования профиля
     if (is_page('profile-edit') && !locate_template('page-profile-edit.php')) {
-        return plugin_dir_path(__FILE__) . 'templates/profile-edit-template.php';
+        return plugin_dir_path(__FILE__) . 'templates/page-profile-edit.php';
     }
 
     // Проверка для страницы истории заказов
     if (is_page('orders') && !locate_template('page-orders.php')) {
-        return plugin_dir_path(__FILE__) . 'templates/orders-template.php';
+        return plugin_dir_path(__FILE__) . 'templates/page-orders.php';
     }
 
     return $template;
@@ -40,23 +40,23 @@ function iti_cabinet_template_redirect()
         exit;
     }
     if ($action == 'password_reset') {
-        iti_cabinet_load_template('password-reset.php');
+        iti_cabinet_load_template('page-password-reset.php');
         exit;
     }
 
     // Проверка и подмена шаблонов на основе query var
     if ($action == 'profile') {
-        iti_cabinet_load_template('profile-template.php');
+        iti_cabinet_load_template('page-profile.php');
         exit;
     }
 
     if ($action == 'profile_edit') {
-        iti_cabinet_load_template('profile-edit-template.php');
+        iti_cabinet_load_template('page-profile-edit.php');
         exit;
     }
 
     if ($action == 'orders') {
-        iti_cabinet_load_template('orders-template.php');
+        iti_cabinet_load_template('page-orders.php');
         exit;
     }
 
@@ -72,19 +72,19 @@ function iti_cabinet_template_redirect()
 
     // Страница входа
     if ($action == 'login') {
-        iti_cabinet_load_template('login-template.php');
+        iti_cabinet_load_template('page-login.php');
         exit;
     }
 
     // Страница регистрации
     if ($action == 'register') {
-        iti_cabinet_load_template('register-template.php');
+        iti_cabinet_load_template('page-register.php');
         exit;
     }
 
     // Страница смены пароля
     if ($action == 'password_change') {
-        iti_cabinet_load_template('password-change.php');
+        iti_cabinet_load_template('page-password-change.php');
         exit;
     }
 }
@@ -212,11 +212,11 @@ function handle_password_reset_request_new_page() {
             error_log('|reset password link: ' . $reset_link);
 
             // Сообщение об успешной отправке
-            wp_redirect(home_url('/password-reset?reset_email_sent=true'));
+            wp_redirect(site_url('/password-reset?reset_email_sent=true'));
             exit;
         } else {
             // Обработка случая, если email не найден
-            wp_redirect(home_url('/password-reset?reset_email_sent=false'));
+            wp_redirect(site_url('/password-reset?reset_email_sent=false'));
             exit;
         }
     }

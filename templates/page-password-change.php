@@ -9,10 +9,8 @@ if (isset($_POST['iti_change_password_nonce']) && wp_verify_nonce($_POST['iti_ch
     $confirm_password = sanitize_text_field($_POST['confirm_password']);
     $user_id = get_current_user_id();
     $user = get_user_by('ID', $user_id);
-    error_log(print_r($user, true));
 
     if ($user) {
-        error_log('wp_redirect ==========================================');
         if (!wp_check_password($current_password, $user->user_pass, $user_id)) {
             $error_message = 'Текущий пароль неверен.';
         } elseif ($new_password !== $confirm_password) {
@@ -25,7 +23,7 @@ if (isset($_POST['iti_change_password_nonce']) && wp_verify_nonce($_POST['iti_ch
             wp_set_auth_cookie($user_id, true);
 
             // Перенаправление с параметром успеха
-            wp_redirect(add_query_arg('password_changed', 'true', home_url('/password-change/')));
+            wp_redirect(add_query_arg('password_changed', 'true', site_url('/password-change/')));
             exit;
         }
     }

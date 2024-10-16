@@ -60,6 +60,9 @@ if (isset($_POST['iti_reset_password'])) {
             <?php
         }
     }
+
+    echo '<p><a href="' . site_url('/login') . '">Войти</a></p>';
+
 } else {
     // Отображаем форму для отправки email, если не было передано ключа и логина
     ?>
@@ -99,7 +102,7 @@ function iti_send_password_reset_email($email) {
     }
 
     // Генерация ссылки для сброса пароля
-    $reset_url = home_url("/password-reset/?key=$reset_key&login=" . rawurlencode($user->user_login));
+    $reset_url = site_url("/password-reset/?key=$reset_key&login=" . rawurlencode($user->user_login));
 
     // Отправка email пользователю
     $message = "Для сброса пароля перейдите по следующей ссылке: $reset_url";
@@ -108,5 +111,7 @@ function iti_send_password_reset_email($email) {
     error_log($reset_url);
 
     echo '<p>Письмо для восстановления пароля отправлено на ваш email.</p>';
+    echo '<p><a href="' . site_url('/login') . '">Войти</a></p>';
+
 }
 ?>
