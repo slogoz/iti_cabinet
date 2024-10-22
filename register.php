@@ -5,7 +5,8 @@ add_action('init', 'iti_cabinet_handle_registration');
 function iti_cabinet_handle_registration() {
     if (isset($_POST['iti_register_nonce']) && wp_verify_nonce($_POST['iti_register_nonce'], 'iti_register_action')) {
         // Проверяем все поля формы
-        $username = sanitize_text_field($_POST['user_name']);
+        $firstname = sanitize_text_field($_POST['user_name']);
+        $username = iti_transliterate($firstname);
         $email = sanitize_email($_POST['user_email']);
         $password = sanitize_text_field($_POST['user_pass']);
         $password_confirm = sanitize_text_field($_POST['user_pass_confirm']);
@@ -34,6 +35,8 @@ function iti_cabinet_handle_registration() {
             // Успешная регистрация, авторизуем пользователя и перенаправляем на профиль
             wp_set_current_user($user_id);
             wp_set_auth_cookie($user_id);
+
+            update_user_meta($user_id, 'firstname', $firstname); // Сохраняем токен в метаданных пользователя
 
             // Подтверждение регистрации по email
             $token = bin2hex(random_bytes(16)); // Генерация уникального токена

@@ -1,5 +1,8 @@
 <?php
 /* Template for Login Page */
+
+use classes\iti\Box;
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -34,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             do_action('wp_email', $user->user_email, $user);
 
             // Перенаправляем пользователя
-            wp_redirect(home_url('/profile'));
+            wp_redirect(site_url('/profile'));
             exit;
         }
     }
@@ -43,36 +46,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 get_header();
 
 include(plugin_dir_path(__FILE__) . 'cabinet-header.php');
+
+$message = false;
+
+if (isset($_GET['email']) && $_GET['email'] == 'failed') {
+    $message = iti_bl_message('Ошибка: неверный email или пароль.', 'error');
+}
+
+$html = 'Если у вас нет пользователя на сайте, то вам сначала надо <a href="' . site_url('/register') . '" class="iti-link">зарегистрироваться</a>.';
+iti_bl_panel($html);
+
+$title = 'Вход на сайт';
+iti_bl_header($title);
+
+ob_start();
+if ($message) {
+    echo $message;
+}
+
+?>
+<form method="post" action="" class="iti-form">
+    <?php wp_nonce_field('iti_login_action', 'iti_login_nonce'); ?>
+    <div class="form-group">
+        <label for="user_email" class="control-label">Email</label>
+        <input type="email" name="email" id="user_email" class="form-control" required value="test@test.com">
+    </div>
+    <div class="form-group">
+        <label for="user_pass" class="control-label">Пароль</label>
+        <input type="password" name="pwd" id="user_pass" class="form-control" required value="test">
+    </div>
+    <div class="form-group offset-top">
+        <div class="control-label"></div>
+        <label for="rememberme" class="control-field">
+            <input name="rememberme" type="checkbox" id="rememberme" class="form-checkbox" value="forever"> запомнить
+            меня
+        </label>
+    </div>
+    <div class="form-group">
+        <div class="control-label"></div>
+        <div for="rememberme" class="control-field">
+            <button type="submit" class="control-but control-but_primary">
+                <?php iti_icon('sign-in'); ?>
+                Войти
+            </button>
+            <a href="<?php echo site_url('/password-reset'); ?>" class="control-but control-but_link">Забыли пароль?</a>
+        </div>
+    </div>
+</form>
+<?php
+$html = ob_get_clean();
+iti_bl_panel($html);
 ?>
 
-<div class="iti-login-form">
-    <h2>Вход в аккаунт</h2>
-    <?php if (isset($_GET['email']) && $_GET['email'] == 'failed'): ?>
-        <p style="color: red;">Ошибка: неверный email или пароль.</p>
-    <?php endif; ?>
-
-    <form method="post" action="">
-        <?php wp_nonce_field('iti_login_action', 'iti_login_nonce'); ?>
-        <p>
-            <label for="user_email">Email:</label>
-            <input type="email" name="email" id="user_email" required value="test@test.com">
-        </p>
-        <p>
-            <label for="user_pass">Пароль:</label>
-            <input type="password" name="pwd" id="user_pass" required value="test">
-        </p>
-        <p>
-            <label for="rememberme">
-                <input name="rememberme" type="checkbox" id="rememberme" value="forever"> Запомнить меня
-            </label>
-        </p>
-        <p>
-            <button type="submit">Войти</button>
-        </p>
-    </form>
-
-    <p><a href="<?php echo site_url('/password-reset'); ?>">Забыли пароль?</a></p>
-    <p>Нет аккаунта? <a href="<?php echo site_url('/register'); ?>">Зарегистрироваться</a></p>
-</div>
+<?php include(plugin_dir_path(__FILE__) . 'cabinet-footer.php'); ?>
 
 <?php get_footer(); ?>

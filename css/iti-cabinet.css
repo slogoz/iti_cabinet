@@ -1,17 +1,468 @@
-.iti-cabinet-header ul {
+body {
+    background-color: #f1f1f1;
+}
+
+.iti-cabinet-content {
+    font-family: Montserrat, Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.45
+}
+
+.iti-cabinet-content,
+.iti-cabinet-content *:before,
+.iti-cabinet-content *:after,
+.iti-cabinet-content * {
+    box-sizing: border-box;
+}
+
+/* Helpers */
+.offset-top {
+    margin-top: 25px;
+}
+
+/* Elements */
+.iti-text {
+    margin: 0 0 12px;
+}
+
+.iti-text-bold {
+    font-weight: 700;
+}
+
+.iti-link,
+.iti-link:visited,
+.iti-link:active {
+    color: #2a6171;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.iti-link:hover {
+    color: #132b32;
+    text-decoration: underline;
+}
+
+.iti-nav {
+    background: #e6e6e6;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    overflow: hidden;
+}
+
+.iti-nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 15px;
 }
-.iti-cabinet-header ul li {
-    display: inline;
+
+.iti-nav li {
+    /*display: inline;*/
 }
-.iti-cabinet-header ul li a {
+
+.iti-nav li.active a {
+    color: #fff;
+    background-color: #5f5f5f;
+}
+
+.iti-nav a {
+    border-radius: 0;
+    color: #1d1d1d;
+    border-right: 1px solid #dadada;
     text-decoration: none;
-    color: #0073aa;
+    padding: 10px 15px;
+    display: block;
 }
-.iti-cabinet-header ul li a:hover {
-    color: #005177;
+
+.iti-nav a:hover {
+    background-color: #dadada;
+}
+
+/* Form */
+.iti-form {
+    padding: 20px 0 0;
+}
+
+.panel-unobserved .iti-form {
+    padding: 0;
+}
+
+.form-group {
+    display: flex;
+    /*align-items: center;*/
+    margin-bottom: 15px;
+}
+
+.control-label {
+    text-align: right;
+    padding: 0 30px 0 0;
+    width: 250px;
+    font-weight: 700;
+    margin-top: .45rem;
+}
+
+.form-control {
+    width: 500px;
+    padding: 8px 15px;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    color: #555;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+.form-control[disabled] {
+    background-color: #eee;
+    cursor: not-allowed;
+}
+
+.control-field {
+    width: 500px;
+    text-align: left;
+    font-weight: 400;
+    cursor: pointer;
+    display: flex;
+}
+
+.control-editor {
+    width: 500px
+}
+
+.control-editor .wp-editor-container {
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.control-editor .wp-editor-tabs {
+    float: left;
+}
+
+.control-editor .wp-switch-editor {
+    margin: 5px 5px 0 0;
+}
+
+.form-checkbox {
+    margin: 0 8px 0 0;
+}
+
+.control-but {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.control-but--edit {
+    padding: 1px 5px;
+    font-size: 12px;
+    border-radius: 3px;
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.control-but--edit:hover {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+
+.control-but_default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.control-but_default:hover {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+
+.control-but_primary {
+    color: #fff;
+    background-color: #2a6171;
+    border-color: #23515e;
+}
+
+.control-but_primary:hover {
+    color: #fff;
+    background-color: #1c414c;
+    border-color: #132b32;
+}
+
+.control-but_link {
+    color: #2a6171;
+    font-weight: 400;
+    border-radius: 0;
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+    text-decoration: none;
+}
+
+.control-but_link:hover {
+    text-decoration: underline;
+}
+
+.image-preview {
+    margin: 0 0 10px;
+}
+
+.switch-button-label {
+    float: left;
+    font-size: 11pt;
+    cursor: pointer;
+    margin-top: 1px;
+}
+
+.switch-button-label.off {
+    color: #adadad;
+}
+
+.switch-button-label.on {
+    color: #db6974;
+}
+
+.switch-button-background {
+    float: left;
+    position: relative;
+    background: #ccc;
+    border: 1px solid #aaa;
+    margin: 1px 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.switch-button-button {
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    background: #fafafa;
+    border: 1px solid #aaa;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+/* Panel */
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    overflow: hidden;
+    /*box-shadow: 0 1px 1px rgba(0, 0, 0, .05);*/
+}
+
+.panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 15px;
+}
+
+.panel-title {
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0;
+
+}
+
+.panel-title .icon-pencil {
+    width: 12px;
+    height: 12px;
+    fill: #333333;
+}
+
+.panel-title .control-but--edit {
+    margin-top: 2px;
+    padding: 5px;
+    float: right;
+    line-height: 0;
+    display: block;
+}
+
+.panel-body {
+    color: #333;
+    padding: 15px;
+}
+
+.panel-hide {
+    display: none;
+}
+
+.message {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    /*box-shadow: 0 1px 1px rgba(0, 0, 0, .05);*/
+    padding: 15px;
+    max-width: 700px;
+}
+
+.panel-default,
+.message-default {
+    border-color: #ddd;
+}
+
+.panel-error,
+.message-error {
+    border-color: #f00;
+    background-color: #fee;
+    color: #b00;
+}
+
+.panel-success,
+.message-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+}
+
+.panel-info,
+.message-info {
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #31708f;
+}
+
+.panel-unobserved,
+.message-unobserved {
+    background-color: transparent;
+    border-color: transparent;
+    color: #333333;
+}
+
+/* Header */
+.header,
+.header h2 {
+    color: #2a6171;
+    font-size: 24px;
+    text-align: left;
+    font-family: PT Sans, Tahoma, Helvetica, sans-serif;
+    font-weight: 700;
+    margin: 0 0 10px;
+}
+
+.header h1 {
+    font-size: 32px;
+}
+
+/* Icons */
+.icon-sign-in,
+.icon-pencil,
+.icon-refresh {
+    width: 14px;
+    height: 14px;
+    fill: #fff;
+    vertical-align: text-top;
+}
+
+.iti-user-view {
+    display: flex;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 150px;
+    padding: 0 15px;
+    margin: 0 0 20px;
+}
+
+.iti-user-view__pic {
+}
+
+.iti-user-view__img {
+    display: block;
+    max-height: 150px;
+    padding: 20px 30px;
+}
+
+.iti-user-view__info {
+    color: #ffffff;
+    padding: 20px;
+}
+
+.iti-user-view__title {
+    font-family: PT Sans, Tahoma, Helvetica, sans-serif;
+    text-decoration: none;
+    color: #fff;
+    transition: all .2s ease 0s;
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0 0 10px;
+    line-height: .8;
+    text-shadow: 0 0 5px #000;
+}
+
+.iti-user-view__text {
+    font-size: 14px;
+    text-shadow: 0 0 5px #000;
+}
+
+/* Grid */
+.container-no-padding {
+    padding: 0;
+    overflow: hidden;
+}
+
+.container-no-padding .panel {
+    margin: 0;
+    height: 100%;
+}
+
+.container-no-padding [class^="col-"] {
+    padding-bottom: 20px;
+}
+
+@media screen and (max-width: 479px) {
+    .form-group {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 15px;
+    }
+
+    .control-label {
+        width: 100%;
+        text-align: left;
+        padding: 0 0 5px;
+    }
+
+    .form-control,
+    .control-field {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+
+    .control-editor {
+        width: 100%;
+    }
 }
