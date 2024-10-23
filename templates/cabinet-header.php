@@ -6,7 +6,6 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-include(plugin_dir_path(__FILE__) . 'cabinet-svg.php');
 ?>
 
 <div class="iti-cabinet-content">
@@ -20,24 +19,29 @@ $actions = array(
     'password_change'
 );
 
-if (is_user_logged_in() && in_array(get_query_var('iti_cabinet_action'), $actions)) :
+//if (is_user_logged_in() && in_array(get_query_var('iti_cabinet_action'), $actions)) :
+if (is_user_logged_in()) :
 
 Box::getInstance()->register('cab-head', function () {
 
     $links = array(
             array(
+                    'order' => 10,
                     'url' => site_url('/profile'),
                     'name' => 'Профиль'
             ),
-            array(
+            'profile-edit' => array(
+                    'order' => 20,
                     'url' => site_url('/profile-edit'),
                     'name' => 'Редактировать профиль'
             ),
-            array(
+            'orders' => array(
+                    'order' => 30,
                     'url' => site_url('/orders'),
                     'name' => 'История заказов'
             ),
             array(
+                    'order' => 40,
                     'url' => wp_logout_url(site_url('/login')),
                     'name' => 'Выйти'
             ),
@@ -46,6 +50,15 @@ Box::getInstance()->register('cab-head', function () {
 //                    'name' => 'Войти'
 //            ),
     );
+
+    $links = apply_filters('iti_cabinet_head_menu_links_array', $links);
+
+    unset($links['orders']);
+    unset($links['profile-edit']);
+
+    usort($links, function($a, $b) {
+        return $a['order'] <=> $b['order']; // Используем оператор spaceship для сравнения
+    });
 
     $uri_current = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
     $user_id = get_current_user_id();
@@ -57,12 +70,17 @@ Box::getInstance()->register('cab-head', function () {
         <?php foreach($links as $link ) :
             $uri = trim(parse_url($link['url'], PHP_URL_PATH), '/');
             $class_attr = '';
-            if ($uri === $uri_current) {
+            if ($uri === $uri_current || str_starts_with($uri_current, $uri . '/')) {
                 $class_attr = ' class="active"';
             }
 
+            $name = $link['name'];
+
+            if(isset($link['state'])) {
+                $name .= library_tag_get_count_state($link['state']);
+            }
         ?>
-            <li<?php echo $class_attr; ?>><a data-path="<?php echo $uri_current; ?>" href="<?php echo $link['url']; ?>"><?php echo $link['name']; ?></a></li>
+            <li<?php echo $class_attr; ?>><a data-path="<?php echo $uri_current; ?>" href="<?php echo $link['url']; ?>"><?php echo $name; ?></a></li>
         <?php endforeach; ?>
     </ul>
 </div>

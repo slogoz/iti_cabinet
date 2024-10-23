@@ -304,10 +304,12 @@ add_action('wp_footer', function () {
     </script>
 
     <!-- Подключение Jcrop CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-jcrop/0.9.15/css/jquery.Jcrop.min.css"/>
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-jcrop/0.9.15/css/jquery.Jcrop.min.css"/>-->
+    <link rel="stylesheet" href="<?php echo WP_ITI_CABINET_URL; ?>/assets/jcrop/jquery.Jcrop.min.css"/>
 
     <!-- Подключение Jcrop JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-jcrop/0.9.15/js/jquery.Jcrop.js"></script>
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-jcrop/0.9.15/js/jquery.Jcrop.js"></script>-->
+    <script src="<?php echo WP_ITI_CABINET_URL; ?>/assets/jcrop/jquery.Jcrop.js"></script>
     <?php
 //    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet"/>
 //    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>

@@ -12,7 +12,7 @@ add_filter('mce_external_plugins', function ($plugin_array)
     return $plugin_array;
 });
 
-add_action('wp_enqueue_scripts', function ()
+add_action('iti_cabinet_enqueue_scripts', function ()
 {
     wp_enqueue_script('iti-but-image-tinymce', WP_ITI_CABINET_URL . 'js/iti-but-image-tinymce.js', array('jquery', 'editor', 'wp-tinymce'), null, true);
 });

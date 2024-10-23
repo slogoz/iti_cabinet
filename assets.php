@@ -3,10 +3,11 @@
 function iti_cabinet_enqueue_styles()
 {
     // Получаем значение параметра действия (iti_cabinet_action)
-    $current_action = get_query_var('iti_cabinet_action');
+    $action = get_query_var('iti_cabinet_action');
 
     // Подключаем стили только на страницах кабинета
-    if (in_array($current_action, ['profile', 'profile_edit', 'orders', 'login', 'register', 'password_reset'])) {
+//    if (in_array($action, ['profile', 'profile_edit', 'orders', 'login', 'register', 'password_reset'])) {
+    if ($action) {
 
         wp_enqueue_style(
             'iti-grid-style', // Уникальное имя стиля
@@ -30,18 +31,26 @@ function iti_cabinet_enqueue_styles()
 //            'all' // Тип вывода
 //        );
     }
+
+    wp_enqueue_style('iti-common-style',plugin_dir_url(__FILE__) . 'css/iti-common.css');
 }
 
 add_action('wp_enqueue_scripts', 'iti_cabinet_enqueue_styles');
 
 function iti_cabinet_enqueue_scripts()
 {
-    // Подключаем ваши скрипты и стили
-    wp_enqueue_script('jquery-switch-button', plugin_dir_url(__FILE__) . 'js/jquery.switchButton.js', array('jquery', 'jquery-ui-core'), null, true);
-    wp_enqueue_script('iti-cabinet-script', plugin_dir_url(__FILE__) . 'js/iti-cabinet.js', array('jquery', 'jquery-ui-core'), null, true);
+    $action = get_query_var('iti_cabinet_action');
+
+    if ($action) {
+        // Подключаем ваши скрипты и стили
+        wp_enqueue_script('jquery-switch-button', plugin_dir_url(__FILE__) . 'js/jquery.switchButton.js', array('jquery', 'jquery-ui-core'), null, true);
+        wp_enqueue_script('iti-cabinet-script', plugin_dir_url(__FILE__) . 'js/iti-cabinet.js', array('jquery', 'jquery-ui-core'), null, true);
+
+        do_action('iti_cabinet_enqueue_scripts');
+    }
 
     // Генерация nonce и передача его в JavaScript
-    wp_localize_script('iti-cabinet-script', 'ajax_object', array(
+    wp_localize_script('jquery', 'ajax_iti', array(
         'ajax_url' => admin_url('admin-ajax.php'),
         'resend_nonce' => wp_create_nonce('resend_email_confirmation_nonce')
     ));

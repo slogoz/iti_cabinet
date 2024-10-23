@@ -2,5 +2,3 @@
 
 error_log('library connected');
 
-
-

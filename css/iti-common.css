@@ -1,0 +1,70 @@
+.iti-but {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 3px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1;
+    border-radius: 4px;
+    user-select: none;
+}
+
+.iti-but_default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.iti-but_default:hover {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+
+.iti-but_primary {
+    color: #fff;
+    background-color: #2a6171;
+    border-color: #2a6171;
+}
+
+.iti-but_primary:hover {
+    color: #fff;
+    background-color: #1c414c;
+    border-color: #1c414c;
+}
+
+.iti-but_primary:not([data-state="none"]) {
+    color: #2a6171;
+    background-color: #fff;
+    border-color: #23515e;
+}
+
+.iti-but_primary:hover:not([data-state="none"]) {
+    color: #1c414c;
+    background-color: #fff;
+    border-color: #132b32;
+}
+
+.iti-but_primary[data-state="black_list"] {
+    color: #000;
+    border-color: #000;
+}
+
+/* Icons */
+.icon-circle,
+.icon-cancel,
+.icon-sign-in,
+.icon-pencil,
+.icon-refresh {
+    width: 14px;
+    height: 14px;
+    fill: #fff;
+    vertical-align: text-top;
+}

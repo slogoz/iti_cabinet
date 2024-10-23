@@ -55,10 +55,10 @@ function iti_cabinet_template_redirect()
         exit;
     }
 
-    if ($action == 'orders') {
-        iti_cabinet_load_template('page-orders.php');
-        exit;
-    }
+//    if ($action == 'orders') {
+//        iti_cabinet_load_template('page-orders.php');
+//        exit;
+//    }
 
     $actions = array(
         'login',
@@ -107,7 +107,7 @@ function iti_cabinet_rewrite_rules()
     // Страницы профиля
     add_rewrite_rule('^profile/?$', 'index.php?iti_cabinet_action=profile', 'top');
     add_rewrite_rule('^profile-edit/?$', 'index.php?iti_cabinet_action=profile_edit', 'top');
-    add_rewrite_rule('^orders/?$', 'index.php?iti_cabinet_action=orders', 'top');
+//    add_rewrite_rule('^orders/?$', 'index.php?iti_cabinet_action=orders', 'top');
 
     // Страницы логина и регистрации
     add_rewrite_rule('^login/?$', 'index.php?iti_cabinet_action=login', 'top');

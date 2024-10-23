@@ -72,3 +72,10 @@ Box::getInstance()->register('message', classes\iti\Block_Message::class);
 
 add_action('wp', 'update_user_activity');
 add_action('user_register', 'save_gender_meta');
+
+add_action('wp_head', 'iti_library_template_head');
+
+function iti_library_template_head()
+{
+    include(WP_ITI_CABINET_DIR . '/templates/cabinet-svg.php');
+}

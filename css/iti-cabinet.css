@@ -29,6 +29,30 @@ body {
     font-weight: 700;
 }
 
+.iti-nav .iti-badge {
+    margin-left: 5px;
+    vertical-align: text-top;
+}
+
+.iti-nav .active .iti-badge {
+    color: #333;
+    background-color: #fff;
+}
+
+.iti-badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    color: #fff;
+    line-height: 1;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: center;
+    background-color: #777;
+    border-radius: 3px;
+}
+
 .iti-link,
 .iti-link:visited,
 .iti-link:active {
@@ -154,6 +178,8 @@ body {
     margin: 0 8px 0 0;
 }
 
+.control-but:focus,
+.control-but:active,
 .control-but {
     display: inline-block;
     margin-bottom: 0;
@@ -180,37 +206,37 @@ body {
     font-size: 12px;
     border-radius: 3px;
     color: #333;
-    background-color: #fff;
+    background: #fff;
     border-color: #ccc;
 }
 
 .control-but--edit:hover {
     color: #333;
-    background-color: #e6e6e6;
+    background: #e6e6e6;
     border-color: #adadad;
 }
 
 .control-but_default {
     color: #333;
-    background-color: #fff;
+    background: #fff;
     border-color: #ccc;
 }
 
 .control-but_default:hover {
     color: #333;
-    background-color: #e6e6e6;
+    background: #e6e6e6;
     border-color: #adadad;
 }
 
 .control-but_primary {
     color: #fff;
-    background-color: #2a6171;
+    background: #2a6171;
     border-color: #23515e;
 }
 
 .control-but_primary:hover {
     color: #fff;
-    background-color: #1c414c;
+    background: #1c414c;
     border-color: #132b32;
 }
 
@@ -219,7 +245,7 @@ body {
     font-weight: 400;
     border-radius: 0;
     border-color: transparent;
-    background-color: transparent;
+    background: transparent;
     box-shadow: none;
     text-decoration: none;
 }
@@ -373,16 +399,6 @@ body {
 
 .header h1 {
     font-size: 32px;
-}
-
-/* Icons */
-.icon-sign-in,
-.icon-pencil,
-.icon-refresh {
-    width: 14px;
-    height: 14px;
-    fill: #fff;
-    vertical-align: text-top;
 }
 
 .iti-user-view {

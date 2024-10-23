@@ -37,11 +37,11 @@ if (!get_user_meta(get_current_user_id(), 'email_confirmed', true)) :
                 e.preventDefault(); // Останавливаем стандартное поведение формы
 
                 $.ajax({
-                    url: ajax_object.ajax_url, // Используем переданный URL
+                    url: ajax_iti.ajax_url, // Используем переданный URL
                     type: 'POST',
                     data: {
                         action: 'resend_email_confirmation',
-                        nonce: ajax_object.resend_nonce // Передаем nonce
+                        nonce: ajax_iti.resend_nonce // Передаем nonce
                     },
                     success: function (response) {
                         if (response.success) {
