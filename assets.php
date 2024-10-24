@@ -41,6 +41,8 @@ function iti_cabinet_enqueue_scripts()
 {
     $action = get_query_var('iti_cabinet_action');
 
+    wp_enqueue_script('jquery');
+
     if ($action) {
         // Подключаем ваши скрипты и стили
         wp_enqueue_script('jquery-switch-button', plugin_dir_url(__FILE__) . 'js/jquery.switchButton.js', array('jquery', 'jquery-ui-core'), null, true);

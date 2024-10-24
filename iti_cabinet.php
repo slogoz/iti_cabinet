@@ -9,7 +9,7 @@ Author URI: https://vk.com/iti_group
 */
 
 // Защита от прямого доступа
-if (!defined('ABSPATH')) {
+if (!defined('ABSPATH') && !WP_DEBUG) {
     exit;
 }
 

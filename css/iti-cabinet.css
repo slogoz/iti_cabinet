@@ -78,6 +78,7 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
+    flex-wrap: wrap;
 }
 
 .iti-nav li {
@@ -95,7 +96,8 @@ body {
     border-right: 1px solid #dadada;
     text-decoration: none;
     padding: 10px 15px;
-    display: block;
+    display: flex;
+    align-items: center;
 }
 
 .iti-nav a:hover {
