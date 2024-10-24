@@ -69,11 +69,11 @@ if ($message) {
     <?php wp_nonce_field('iti_login_action', 'iti_login_nonce'); ?>
     <div class="form-group">
         <label for="user_email" class="control-label">Email</label>
-        <input type="email" name="email" id="user_email" class="form-control" required value="test@test.com">
+        <input type="email" name="email" id="user_email" class="form-control" required>
     </div>
     <div class="form-group">
         <label for="user_pass" class="control-label">Пароль</label>
-        <input type="password" name="pwd" id="user_pass" class="form-control" required value="test">
+        <input type="password" name="pwd" id="user_pass" class="form-control" required>
     </div>
     <div class="form-group offset-top">
         <div class="control-label"></div>

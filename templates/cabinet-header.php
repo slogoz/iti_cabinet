@@ -66,13 +66,15 @@ Box::getInstance()->register('cab-head', function () {
     $background_image_url = "url('{$user->image_head}')";
 ?>
 <div class="iti-nav">
-    <ul>
+    <div class="iti-nav__list">
         <?php foreach($links as $link ) :
             $uri = trim(parse_url($link['url'], PHP_URL_PATH), '/');
-            $class_attr = '';
+
+            $class_attr = ' class="iti-nav__list-item';
             if ($uri === $uri_current || str_starts_with($uri_current, $uri . '/')) {
-                $class_attr = ' class="active"';
+                $class_attr .= ' active"';
             }
+            $class_attr .= '"';
 
             $name = $link['name'];
 
@@ -80,9 +82,9 @@ Box::getInstance()->register('cab-head', function () {
                 $name .= library_tag_get_count_state($link['state']);
             }
         ?>
-            <li<?php echo $class_attr; ?>><a data-path="<?php echo $uri_current; ?>" href="<?php echo $link['url']; ?>"><?php echo $name; ?></a></li>
+            <div<?php echo $class_attr; ?>><a data-path="<?php echo $uri_current; ?>" href="<?php echo $link['url']; ?>"><?php echo $name; ?></a></div>
         <?php endforeach; ?>
-    </ul>
+    </div>
 </div>
 <div class="iti-user-view" style="background-image: <?php echo $background_image_url; ?>;">
     <div class="iti-user-view__pic">

@@ -1,7 +1,7 @@
 <?php
 
 
-add_filter('the_content', 'library_add_but_state');
+//add_filter('the_content', 'library_add_but_state');
 
 function library_add_but_state($content)
 {
@@ -17,9 +17,9 @@ function library_init_state()
     $state_arr = get_data_book_states();
 }
 
-function get_data_book_states($mod = 'no_none')
+function get_arr_book_states()
 {
-    $states = array(
+    return array(
         'none' => 'Нет статуса',
         'wish' => 'Хочу прочитать',
         'reading' => 'Читаю',
@@ -29,6 +29,11 @@ function get_data_book_states($mod = 'no_none')
         'unfinished' => 'Недописано',
         'black_list' => 'Чёрный список'
     );
+}
+
+function get_data_book_states($mod = 'no_none')
+{
+    $states = get_arr_book_states();
 
     if ($mod === 'no_none') {
         unset($states['none']);

@@ -88,4 +88,6 @@ echo '</div>';
 
 echo '</form>';
 
+include(plugin_dir_path(__FILE__) . 'cabinet-footer.php');
+
 get_footer();

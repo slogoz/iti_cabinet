@@ -89,18 +89,19 @@ add_action('wp_footer', function () {
             max-width: 460px;
         }
 
-        .modal-body {
+        #cropModal .modal-body {
             margin-bottom: 10px;
         }
 
-        .modal-body img {
+        #cropModal .modal-body img {
             width: 100%;
+            max-width: none;
             height: auto;
         }
 
-        .jcrop-holder {
-            background-color: transparent !important;
-        }
+        /*.jcrop-holder {*/
+        /*    background-color: transparent !important;*/
+        /*}*/
     </style>
     <div id="cropModal" style="display: none;">
         <div class="modal-content">
@@ -137,6 +138,11 @@ add_action('wp_footer', function () {
 
             let $targetFileImage = $imageFile;
             let $targetViewImage = $imageView;
+
+            let  JcropOptions = {
+                bgColor: '#eeeeee', // Цвет фона
+                bgOpacity: 0.3, // Прозрачность фона
+            };
 
             $modalButClose.on('click', function (e) {
                 $modal.hide();
@@ -188,6 +194,8 @@ add_action('wp_footer', function () {
                                 aspectRatio: minWidth / minHeight, // Соотношение сторон (например, 1:1)
                                 onSelect: updateCoords, // Функция для обработки координат
                                 setSelect: [0, 0, 20000, 20000],
+                                bgColor: JcropOptions.bgColor, // Цвет фона
+                                bgOpacity:  JcropOptions.bgOpacity, // Прозрачность фона
                             }, function () {
                                 jcropApi = this; // Сохраняем экземпляр Jcrop
                             });
@@ -224,7 +232,9 @@ add_action('wp_footer', function () {
                             $cropImage.Jcrop({
                                 aspectRatio: 1, // Соотношение сторон (например, 1:1)
                                 onSelect: updateCoords, // Функция для обработки координат
-                                setSelect: [0, 0, 20000, 20000]
+                                setSelect: [0, 0, 20000, 20000],
+                                bgColor: JcropOptions.bgColor, // Цвет фона
+                                bgOpacity:  JcropOptions.bgOpacity, // Прозрачность фона
                             }, function () {
                                 jcropApi = this; // Сохраняем экземпляр Jcrop
                             });

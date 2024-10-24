@@ -73,7 +73,7 @@ body {
     overflow: hidden;
 }
 
-.iti-nav ul {
+.iti-nav__list {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -81,13 +81,8 @@ body {
     flex-wrap: wrap;
 }
 
-.iti-nav li {
+.iti-nav__list-item {
     /*display: inline;*/
-}
-
-.iti-nav li.active a {
-    color: #fff;
-    background-color: #5f5f5f;
 }
 
 .iti-nav a {
@@ -102,6 +97,12 @@ body {
 
 .iti-nav a:hover {
     background-color: #dadada;
+    color: #1d1d1d;
+}
+
+.iti-nav__list-item.active a {
+    color: #fff;
+    background-color: #5f5f5f;
 }
 
 /* Form */

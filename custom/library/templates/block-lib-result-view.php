@@ -1,5 +1,8 @@
 <?php
 
+global $wpshop_template;
+global $wpshop_helper;
+
 /** @var string $uri_current */
 $state = str_replace('library/', '', $uri_current);
 if ($state == 'library') {
@@ -7,6 +10,7 @@ if ($state == 'library') {
 }
 
 $post_view = get_library_post_view($state);
+slog(get_library_user_post_state());
 
 ?>
 <style>
@@ -25,6 +29,15 @@ $post_view = get_library_post_view($state);
 
     .view-card__link {
         text-decoration: none;
+    }
+
+    .view-card__link_img {
+        text-align: center;
+    }
+
+    .view-card_grid .view-card__link_img {
+        height: 280px;
+        margin-bottom: 15px;
     }
 
     .view-card__title {
@@ -64,6 +77,7 @@ $post_view = get_library_post_view($state);
         position: relative;
         display: inline-block;
         padding-left: 1.7em;
+        color: #111111;
     }
 
     .view-card__views:before,
@@ -73,6 +87,7 @@ $post_view = get_library_post_view($state);
         top: 50%;
         transform: translateY(-50%);
         color: #027b9a;
+        font-family: wpshop-core !important;
     }
 
     .view-card__comments:before {
@@ -89,13 +104,14 @@ $post_view = get_library_post_view($state);
 
     .view-card .iti-but {
         margin: 0 0 10px;
+        font-size: 14px;
     }
 
     .view-card .view-card__title {
         margin: 0 0 5px;
     }
 
-    .view-card .view-card__views,
+    /*.view-card .view-card__views,*/
     .view-card .view-card__comments {
         margin-right: 20px;
     }
@@ -153,6 +169,21 @@ $post_view = get_library_post_view($state);
             font-size: 12px;
         }
     }
+
+    @media (max-width: 379px) {
+        .view-card {
+            align-items: center;
+        }
+
+        .view-card__title {
+            font-size: 18px;
+        }
+
+        .view-card .iti-but {
+            min-width: 60%;
+            align-self: center;
+        }
+    }
 </style>
 <div class="col-lg-12">
     <?php
@@ -161,20 +192,33 @@ $post_view = get_library_post_view($state);
             <div class="panel panel-default">
                 <div class="panel-body row">
                     <?php while ($post_view->have_posts()) : $post_view->the_post();
+
+                     $attachment_id = get_post_thumbnail_id(get_the_ID());
+                        if ($attachment_id) {
+                            $src_thumbnail = wp_get_attachment_url($attachment_id);
+                        } else {
+                            $src_thumbnail = 'https://topliba.com/covers/886311_200x300.jpg?t=1729705506';
+                        }
+
                         // Вывод контента каждой записи
                         ?>
-                        <div class="col-lg-2 col-sm-3 col-ms-4 col-xs-6 view-card">
+                        <div class="col-xl-2 col-lg-3 col-sm-4 col-xs-6 view-card view-card_grid">
                             <a href="<?php the_permalink(); ?>" class="view-card__link view-card__link_img">
-                                <img src="https://topliba.com/covers/886311_200x300.jpg?t=1729705506"
-                                     class="view-card__img">
+                                <img src="<?php echo $src_thumbnail; ?>" class="view-card__img">
                             </a>
                             <?php echo library_tag_but_state(); ?>
                             <a href="<?php the_permalink(); ?>" class="view-card__link view-card__link_title">
                                 <div class="view-card__title"><?php the_title(); ?></div>
                             </a>
                             <div class="view-card__info">
-                                <span class="view-card__comments">0</span>
-                                <span class="view-card__views">11</span>
+                                <span class="view-card__comments"><?php echo get_comments_number() ?></span>
+                                <span class="view-card__views"><?php
+                                    if(is_object($wpshop_helper) && method_exists($wpshop_helper,'rounded_number')) {
+                                        echo $wpshop_helper->rounded_number($wpshop_template->get_views());
+                                    } else {
+                                        echo '0';
+                                    }
+                                    ?></span>
                             </div>
                             <div class="view-card__meta">
                                 <a href="<?php the_permalink(); ?>" class="view-card__link view-card__link_author">
@@ -210,8 +254,8 @@ $post_view = get_library_post_view($state);
                             </div>
                             <div class="view-card__info">
                                 <?php echo library_tag_but_state(); ?>
-                                <span class="view-card__comments">0</span>
-                                <span class="view-card__views">11</span>
+                                <span class="view-card__comments"><?php echo get_comments_number() ?></span>
+                                <span class="view-card__views"><?php echo $wpshop_helper->rounded_number( $wpshop_template->get_views() ); ?></span>
                             </div>
                         </div>
                     </div>
