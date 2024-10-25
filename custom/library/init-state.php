@@ -355,8 +355,23 @@ function update_post_meta_status()
         $meta_key = sanitize_text_field($_POST['meta_key']);
         $meta_value = sanitize_text_field($_POST['meta_value']);
 
+        $library_book = get_library_books();
+
+        if (!$library_book) {
+            $library_book = array();
+        }
+
+        unset($library_book[$post_id]);
+        if ($meta_value !== 'none') {
+            $library_book[$post_id] = array(
+                'state' => $meta_value
+            );
+        }
+
+        set_library_books($library_book);
+
         // Сохраняем метаданные для поста
-        update_post_meta($post_id, $meta_key, $meta_value);
+//        update_post_meta($post_id, $meta_key, $meta_value);
 
         // Возвращаем успешный ответ
         wp_send_json_success('Метаданные обновлены.');
@@ -365,4 +380,13 @@ function update_post_meta_status()
     }
 
     wp_die(); // Завершаем выполнение скрипта
+}
+
+function get_library_state_page()
+{
+    $uri_state = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+    $state = preg_replace('~.*?library\/~', '', $uri_state);
+
+    return $state;
+//    return str_replace('library/', '', $uri_state);
 }

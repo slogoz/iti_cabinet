@@ -15,7 +15,7 @@ echo '<div class="row">';
 echo '<div class="col-md-12 col-lg-12">';
 
 $links = array(
-    array(
+    'library' => array(
         'order' => 10,
         'url' => site_url('/library'),
         'name' => 'Все',

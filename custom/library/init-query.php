@@ -2,71 +2,79 @@
 
 function library_get_count_state($state = 'all')
 {
+    $library_book = get_library_books();
 
-    $meta_key = 'state';  // Мета-ключ для фильтрации
-    $meta_value = $state;       // Значение мета-поля, которое мы ищем (например, видео)
+    if ($library_book) {
+        if ($state === 'all') {
+            $post_ids = array_keys($library_book);
+        } else {
+            $filtered_arr = array_filter($library_book, function ($book) use ($state) {
+                return $book['state'] === $state;
+            });
 
-    $args = array(
-        'post_type' => 'post',    // Тип постов
-        'posts_per_page' => -1,        // Получаем все посты
-    );
+            $post_ids = array_keys($filtered_arr);
+        }
 
-    if ($state !== 'all') {
-        $args['meta_query'] = array(
-            array(
-                'key' => $meta_key,    // Указываем мета-ключ
-                'value' => $meta_value,  // Указываем значение мета-поля
-                'compare' => '='           // Сравнение по равенству
-            ),
-        );
-    } else {
-        $states = get_arr_book_states();
-        unset($states['none']);
+        if (!empty($post_ids)) {
+            $args = array(
+                'post_type' => 'post',   // Тип постов
+                'posts_per_page' => -1,  // Получаем все посты
+                'post__in' => $post_ids, // Выбираем посты по их ID
+                'orderby' => 'post__in', // Сортировка в порядке переданных ID
+            );
 
-        $args['meta_query'] = array(
-            array(
-                'key' => $meta_key,    // Указываем мета-ключ
-                'value' => array_keys($states),  // Указываем массив значений
-                'compare' => 'IN'          // Сравнение по вхождению
-            ),
-        );
+            $query = new WP_Query($args);
+
+            return $query->post_count;
+        }
     }
 
-    $query = new WP_Query($args);
-
-    return $query->post_count;
+    return 0;
 }
 
-function get_library_post_view($state)
+function get_library_post_view($state, $no_filter = false)
 {
+    $library_book = get_library_books();
+    $post_ids = array(-2);
 
-    $meta_key = 'state';  // Мета-ключ для фильтрации
-    $meta_value = $state;       // Значение мета-поля, которое мы ищем (например, видео)
+    if ($library_book) {
+        if ($state === 'library') {
+            $post_ids = array_keys($library_book);
+        } else {
+            $filtered_arr = array_filter($library_book, function ($book) use ($state) {
+                return $book['state'] === $state;
+            });
+
+            $post_ids = array_keys($filtered_arr);
+        }
+
+        if (empty($post_ids)) {
+            $post_ids = array(-2);
+        }
+    }
+
+    $post_ids = array_reverse($post_ids);
 
     $args = array(
-        'post_type' => 'post',    // Тип постов
-        'posts_per_page' => 10,        // Получаем все посты
+        'post_type' => 'post',   // Тип постов
+        'posts_per_page' => 20,  // Получаем все посты
+        'post__in' => $post_ids, // Выбираем посты по их ID
+        'orderby' => 'post__in', // Сортировка в порядке переданных ID
     );
 
-    if ($state !== 'all') {
-        $args['meta_query'] = array(
-            array(
-                'key' => $meta_key,    // Указываем мета-ключ
-                'value' => $meta_value,  // Указываем значение мета-поля
-                'compare' => '='           // Сравнение по равенству
-            ),
-        );
-    } else {
-        $states = get_arr_book_states();
-        unset($states['none']);
+    if (!$no_filter && !empty($_GET['genre'])) {
+        $args['cat'] = $_GET['genre'];
+    }
 
-        $args['meta_query'] = array(
-            array(
-                'key' => $meta_key,    // Указываем мета-ключ
-                'value' => array_keys($states),  // Указываем массив значений
-                'compare' => 'IN'          // Сравнение по вхождению
-            ),
-        );
+    if (isset($_GET['sort']) && $_GET['sort'] == 'updated') {
+        $args['orderby'] = 'date';
+        $args['order'] = 'DESC';
+    }
+
+    if (isset($_GET['sort']) && $_GET['sort'] == 'views') {
+        $args['meta_key'] = 'views';
+        $args['orderby'] = 'meta_value_num';
+        $args['order'] = 'DESC';
     }
 
     $query = new WP_Query($args);
@@ -76,9 +84,7 @@ function get_library_post_view($state)
 
 function get_library_user_post_state()
 {
-    $meta_key = 'library_book';
-
-    $library_book = get_user_meta(get_current_user_id(), $meta_key, true);
+    $library_book = get_library_books();
 
     $args = array(
         'post_type' => 'post',    // Тип постов
@@ -88,4 +94,14 @@ function get_library_user_post_state()
     $query = new WP_Query($args);
 
     return $query->post_count;
+}
+
+function get_library_books()
+{
+    return get_user_meta(get_current_user_id(), 'library_book', true);
+}
+
+function set_library_books($meta_value)
+{
+    update_user_meta(get_current_user_id(), 'library_book', $meta_value);
 }

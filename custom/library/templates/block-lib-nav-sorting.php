@@ -11,9 +11,9 @@ $lib_nav_sorting = array(
         'url' => site_url($uri_current . '?sort=updated'),
         'text' => 'по обновлению'
     ),
-    'rating' => array(
-        'url' => site_url($uri_current . '?sort=rating'),
-        'text' => 'по рейтингу'
+    'views' => array(
+        'url' => site_url($uri_current . '?sort=views'),
+        'text' => 'по просмотрам'
     ),
 );
 
@@ -31,6 +31,13 @@ $lib_nav_filter = array(
         'text' => 'по рейтингу'
     ),
 );
+
+$lib_genre = get_library_genre();
+
+$state = get_library_state_page();
+if($state !== 'favorite') {
+    $lib_nav_sorting['default']['text'] = 'по добавлению в библиотеку';
+}
 
 $lib_nav_view_types = array(
     'grid_large' => array(
@@ -70,6 +77,7 @@ if (!empty($_GET['view_type'])) {
         text-decoration: none;
         border-radius: 4px;
         padding: 5px 10px;
+        display: inline-block;
     }
 
     .lib-nav-sorting__order-but:hover a {
@@ -138,6 +146,12 @@ if (!empty($_GET['view_type'])) {
         }
     }
 
+    @media (max-width: 479px) {
+        .lib-nav-sorting {
+            flex-direction: column;
+        }
+    }
+
 </style>
 <div class="col-lg-12 col-xl-6">
     <div class="lib-nav-sorting">
@@ -147,7 +161,7 @@ if (!empty($_GET['view_type'])) {
             $class = ' class="lib-nav-sorting__order-but';
             if (isset($_GET['sort']) && $_GET['sort'] == $name) {
                 $class .= ' active';
-            } elseif (!isset($_GET['sort']) && $name == 'default') {
+            } elseif (empty($_GET['sort']) && $name == 'default') {
                 $class .= ' active';
             }
             $class .= '"';
@@ -167,42 +181,23 @@ if (!empty($_GET['view_type'])) {
             <label for="genre" class="lib-nav-filter__caption">Фильтр по жанру</label>
             <select name="genre" class="form-control lib-nav-filter-form__select">
                 <option></option>
-                <option value="12682">Young adult (1)</option>
-                <option value="12381">Боевое фэнтези (1)</option>
-                <option value="12478">Бытовое фэнтези (1)</option>
-                <option value="12189">Героическая фантастика (1)</option>
-                <option value="12593">Героическое фэнтези (1)</option>
-                <option value="12222">Детская литература: прочее (1)</option>
-                <option value="12255">Домашние животные (1)</option>
-                <option value="12592">Зарубежное фэнтези (1)</option>
-                <option value="12133">Короткие любовные романы (4)</option>
-                <option value="12085">Любовная фантастика (2)</option>
-                <option value="12390">Любовное фэнтези (3)</option>
-                <option value="12683">Молодежная проза (1)</option>
-                <option value="12113">Научная Фантастика (1)</option>
-                <option value="12196">О любви (1)</option>
-                <option value="12647">Остросюжетные любовные романы (3)</option>
-                <option value="12147" selected="selected">Попаданцы (2)</option>
-                <option value="12479">Приключенческое фэнтези (2)</option>
-                <option value="12135">Природа и животные (1)</option>
-                <option value="12679">Романтическое фэнтези (2)</option>
-                <option value="12327">Самиздат, сетевая литература (2)</option>
-                <option value="12097">Сказка (1)</option>
-                <option value="12748">Служебный роман (2)</option>
-                <option value="12128">Современные любовные романы (10)</option>
-                <option value="12142">Социальная фантастика (1)</option>
-                <option value="12084">Ужасы (1)</option>
-                <option value="12600">Эпическое фэнтези (1)</option>
-                <option value="12170">Эротика (1)</option>
+                <?php foreach ($lib_genre as $genre) :
+                    if(isset($_GET['genre']) && $_GET['genre'] == $genre['id']) {
+                        echo "<option value='{$genre['id']}' selected>{$genre['name']} ({$genre['count']})</option>";
+                    } else {
+                        echo "<option value='{$genre['id']}'>{$genre['name']} ({$genre['count']})</option>";
+                    }
+                endforeach; ?>
             </select>
         </form>
     </div>
 </div>
 <div class="col-12 lib-header-view">
     <?php
-    iti_bl_header('Регистрация на сайте', array(
-        'after_title' => '!'
-    ));
+    $state = get_library_state_page();
+    $title = $state === 'library' ? 'Моя библиотека' : get_arr_book_states()[$state];
+
+    iti_bl_header($title);
     ?>
     <style>
         .buttons-view-result {

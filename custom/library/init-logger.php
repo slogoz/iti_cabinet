@@ -8,9 +8,10 @@ if(defined('LOGGER') && LOGGER) {
 }
 function logger_init()
 {
+    if (!is_user_logged_in()) {
 //    if (!is_user_logged_in() || wp_get_current_user()->user_login != LOGGER) {
-//        return false;
-//    }
+        return false;
+    }
 
     add_action('logger', function () {
         echo "<div class='logger-box'>";

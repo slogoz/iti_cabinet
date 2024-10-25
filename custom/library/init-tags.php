@@ -13,12 +13,17 @@ function library_tag_but_state()
     $post_id = get_the_ID();
 
     if ($post_id) {
-        $_state = get_post_meta($post_id, 'state', true);
+        $library_book = get_library_books();
 
-        if ($_state) {
-            $state = $_state;
-            if ($state !== 'none') {
-                $caption = get_data_book_states('all')[$state];
+        if ($library_book && isset($library_book[$post_id])) {
+//            $_state = get_post_meta($post_id, 'state', true);
+            $_state = $library_book[$post_id]['state'];
+
+            if ($_state) {
+                $state = $_state;
+                if ($state !== 'none') {
+                    $caption = get_data_book_states('all')[$state];
+                }
             }
         }
     }

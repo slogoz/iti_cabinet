@@ -30,8 +30,11 @@ function library_templates()
 function library_rewrite_rules()
 {
     // Страницы библиотеки
+//    add_rewrite_rule('^users/([^/]*)/library/([^/]*)/?$', 'index.php?iti_cabinet_action=library&user_id=$matches[1]&category=$matches[2]', 'top');
     add_rewrite_rule('^library/([^/]*)/?$', 'index.php?iti_cabinet_action=library&category=$matches[1]', 'top');
     add_rewrite_rule('^library/?$', 'index.php?iti_cabinet_action=library', 'top');
+
+//    add_rewrite_rule('^authors/?$', 'index.php?iti_cabinet_action=library&page=authors', 'top');
 }
 
 add_action('init', 'library_rewrite_rules');
