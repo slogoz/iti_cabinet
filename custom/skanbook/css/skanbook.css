@@ -6,3 +6,11 @@
 .post-card--vertical .iti-but {
     margin-bottom: 10px;
 }
+
+.post-card--horizontal .iti-but {
+    margin-top: 10px;
+}
+
+.post-card--horizontal .post-card__thumbnail img {
+    width: auto;
+}

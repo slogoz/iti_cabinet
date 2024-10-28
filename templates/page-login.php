@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         } else {
             // После успешной авторизации
+            nocache_headers(); // отправляет заголовки, запрещающие кэширование страницы
             wp_clear_auth_cookie(); // Очистка старых куки
 
             // Устанавливаем куки для авторизованного пользователя
@@ -34,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             wp_set_auth_cookie($user->ID, $remember); // Устанавливаем куки с учетом чекбокса "Запомнить меня"
 
             // Убедись, что роли установлены корректно
-            do_action('wp_email', $user->user_email, $user);
+            do_action('wp_login', $user->user_email, $user);
 
             // Перенаправляем пользователя
             wp_redirect(site_url('/profile'));

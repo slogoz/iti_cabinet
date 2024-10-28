@@ -72,3 +72,14 @@
     fill: #fff;
     vertical-align: text-top;
 }
+
+.control-but svg {
+    position: relative;
+    top: 0;
+}
+
+@media (max-width: 479px) {
+    .header-user-menu .header-user-menu__user-name-box {
+        display: none;
+    }
+}

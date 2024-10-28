@@ -105,7 +105,7 @@ function iti_cabinet_load_template($template_name)
 function iti_cabinet_rewrite_rules()
 {
     // Страницы профиля
-    add_rewrite_rule('^profile/?$', 'index.php?iti_cabinet_action=profile', 'top');
+    add_rewrite_rule('^profile/?$', 'index.php?iti_cabinet_action=profile&page=profile', 'top');
     add_rewrite_rule('^profile-edit/?$', 'index.php?iti_cabinet_action=profile_edit', 'top');
 //    add_rewrite_rule('^orders/?$', 'index.php?iti_cabinet_action=orders', 'top');
 

@@ -91,7 +91,7 @@ if (!empty($_GET['view_type'])) {
     }
 
     .lib-nav-sorting__caption {
-        padding: 0 10px 0 0;
+        padding: 5px 10px 5px 0;
     }
 
     .lib-nav-filter {
@@ -121,7 +121,7 @@ if (!empty($_GET['view_type'])) {
     .lib-nav-filter-form__select {
         border-radius: 0 4px 4px 0;
         border-left: none;
-        width: 100%;
+        /*width: 100%;*/
         max-width: 250px;
     }
 
@@ -153,7 +153,7 @@ if (!empty($_GET['view_type'])) {
     }
 
 </style>
-<div class="col-lg-12 col-xl-6">
+<div class="col-lg-12 col-xl-7">
     <div class="lib-nav-sorting">
         <div class="lib-nav-sorting__caption">Сортировать:</div>
         <?php foreach ($lib_nav_sorting as $name => $item) :
@@ -175,7 +175,7 @@ if (!empty($_GET['view_type'])) {
         <?php endforeach; ?>
     </div>
 </div>
-<div class="col-lg-12 col-xl-6">
+<div class="col-lg-12 col-xl-5">
     <div class="lib-nav-filter">
         <form action="" class="lib-nav-filter-form">
             <label for="genre" class="lib-nav-filter__caption">Фильтр по жанру</label>

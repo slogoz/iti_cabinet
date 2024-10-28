@@ -1,6 +1,6 @@
 <?php
 
-add_filter('show_admin_bar', function($show) {
+add_filter('show_admin_bar', function ($show) {
     // Проверяем, если пользователь вошёл в систему и находитесь не в админке
     if (!is_admin() && is_user_logged_in()) {
         $user = wp_get_current_user();
@@ -13,4 +13,24 @@ add_filter('show_admin_bar', function($show) {
         }
     }
     return $show; // Включаем admin bar для остальных
+});
+
+add_action('wp_footer', function () {
+
+    $iti_cabinet_action = get_query_var('iti_cabinet_action');
+    if ($iti_cabinet_action) {
+        ?>
+        <script>
+            (function ($) {
+                $(document).ready(function (e) {
+                    let $orient = $('.site-logotype > img');
+
+                    if ($orient.length) {
+                        $orient.wrap('<a href="https://skanbook.ru"></a>');
+                    }
+                });
+            })(jQuery);
+        </script>
+        <?php
+    }
 });

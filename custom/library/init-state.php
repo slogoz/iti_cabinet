@@ -72,6 +72,12 @@ function template_modal_state()
             </div>
         </div>
     </div>
+    <style>
+
+    </style>
+    <div class="message-go-login" style="display: none;">
+        <?php echo iti_bl_message('Сначала войдите на сайт'); ?>
+    </div>
     <?php
     echo ob_get_clean();
 }
@@ -87,7 +93,7 @@ function template_modal_state_script()
                 let $modalStateOverlay = $('.modal-state-overlay');
                 let $modalStateButClose = $('.modal-state__close');
                 let $modalStateItem = $('.iti-state-list__item');
-                let $modalStateLoading = $('.modal-state-loading')
+                let $modalStateLoading = $('.modal-state-loading');
                 let $butsAction;
 
                 let id_post,
@@ -98,17 +104,26 @@ function template_modal_state_script()
                 $modalStateOverlay.on('click', modalStateClose);
                 $modalStateItem.on('click', modalStateSelect);
 
-                $('.iti-but--library').on('click', function (e) {
+                $('.post-cards').on('click', '.iti-but--library', stateActive);
+                $('.lib-but-state-container .iti-but--library').on('click', stateActive);
+
+                function updateButtons(state, caption) {
+                    $butsAction.text(caption);
+                    $butsAction.attr('data-state', state);
+                }
+
+                function stateActive(e) {
+
+                    if (!ajax_iti.user_logged_in) {
+                        showMessageLogin();
+                        return;
+                    }
+
                     id_post = $(this).attr('data-id');
                     let state = $(this).attr('data-state');
                     $butsAction = $('.iti-but--id-' + id_post);
 
                     modalStateShow(state);
-                });
-
-                function updateButtons(state, caption) {
-                    $butsAction.text(caption);
-                    $butsAction.attr('data-state', state);
                 }
 
                 function modalStateSelect(e) {
@@ -184,6 +199,15 @@ function template_modal_state_script()
                     });
                 }
             });
+
+            function showMessageLogin() {
+                console.log('Зайдите в кабинет');
+                let $message = $('.message-go-login');
+                if($message.length) {
+                    $message.show();
+                    $message.delay(3000).fadeOut();
+                }
+            }
         })(jQuery);
     </script>
     <?php
@@ -338,6 +362,19 @@ function template_modal_state_style()
             top: 50%;
             margin-left: -15px;
             margin-top: -15px;
+        }
+
+        .message-go-login {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 25px 15px;
+            text-align: center;
+            font-size: 16px;
+            background: #d9edf7;
+            border-color: #bce8f1;
+            color: #31708f;
         }
     </style>
     <?php

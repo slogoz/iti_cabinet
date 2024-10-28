@@ -1,16 +1,24 @@
 <?php
 
-const LOGGER = true;
+const LOGGER = false;
 
-if(defined('LOGGER') && LOGGER) {
-    add_action('admin_footer', 'logger_init');
-    add_action('wp_footer', 'logger_init');
+if (defined('LOGGER') && LOGGER) {
+    add_action('plugins_loaded', function () {
+        $current_user = wp_get_current_user();
+//        echo 'USE_TARGETING';
+        if (is_user_logged_in() && $current_user->ID === 3) {
+            add_action('admin_footer', 'logger_init');
+            add_action('wp_footer', 'logger_init');
+        } elseif (isset($_GET['key'])) {
+            add_action('admin_footer', 'logger_init');
+            add_action('wp_footer', 'logger_init');
+        }
+    });
 }
 function logger_init()
 {
     if (!is_user_logged_in()) {
-//    if (!is_user_logged_in() || wp_get_current_user()->user_login != LOGGER) {
-        return false;
+//        return false;
     }
 
     add_action('logger', function () {
@@ -199,7 +207,7 @@ function slog($str, $key = 'default')
         $str = $str_new;
     }
 
-    if($key == 'return') {
+    if ($key == 'return') {
         return '<div class="logger__message">' . $str . '</div>';
     }
 

@@ -23,6 +23,7 @@ if ( true ) {
         define('WP_ITI_CABINET_URL', plugin_dir_url(__FILE__));
     }
 
+//    include plugin_dir_path(__FILE__) . 'secret-cookie.php';
     include plugin_dir_path(__FILE__) . 'functions.php';
     include plugin_dir_path(__FILE__) . 'assets.php';
     include plugin_dir_path(__FILE__) . 'register.php';

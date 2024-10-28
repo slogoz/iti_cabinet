@@ -51,11 +51,13 @@ function iti_cabinet_enqueue_scripts()
         do_action('iti_cabinet_enqueue_scripts');
     }
 
-    // Генерация nonce и передача его в JavaScript
-    wp_localize_script('jquery', 'ajax_iti', array(
+    $ajax_iti = array(
         'ajax_url' => admin_url('admin-ajax.php'),
-        'resend_nonce' => wp_create_nonce('resend_email_confirmation_nonce')
-    ));
+        'resend_nonce' => wp_create_nonce('resend_email_confirmation_nonce'),
+        'user_logged_in' => is_user_logged_in()
+    );
+
+    wp_localize_script('jquery', 'ajax_iti', $ajax_iti);
 }
 
 add_action('wp_enqueue_scripts', 'iti_cabinet_enqueue_scripts');

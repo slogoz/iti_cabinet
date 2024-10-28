@@ -1,8 +1,10 @@
 <?php
 
-function skanbook_tag_but_state()
+function skanbook_tag_but_state($caption = 'Добавить')
 {
-    echo library_tag_but_state();
+//    if (is_user_logged_in()) {
+        echo library_tag_but_state($caption);
+//    }
 }
 
 function get_library_author_urls()

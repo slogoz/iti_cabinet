@@ -35,5 +35,4 @@ function autoload_files_from_directory($directory, $pattern = '*.php')
 
 // Пример использования:
 $auto_directory = __DIR__; // Замените на свою директорию
-error_log('connected:');
 autoload_files_from_directory($auto_directory, 'init*.php');

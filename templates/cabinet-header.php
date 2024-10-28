@@ -40,7 +40,7 @@ Box::getInstance()->register('cab-head', function () {
                     'url' => site_url('/orders'),
                     'name' => 'История заказов'
             ),
-            array(
+            'logout' => array(
                     'order' => 40,
                     'url' => wp_logout_url(site_url('/login')),
                     'name' => 'Выйти'
@@ -55,6 +55,7 @@ Box::getInstance()->register('cab-head', function () {
 
     unset($links['orders']);
     unset($links['profile-edit']);
+    unset($links['logout']);
 
     usort($links, function($a, $b) {
         return $a['order'] <=> $b['order']; // Используем оператор spaceship для сравнения
@@ -78,9 +79,9 @@ Box::getInstance()->register('cab-head', function () {
 
             $name = $link['name'];
 
-            if(isset($link['state'])) {
-                $name .= library_tag_get_count_state($link['state']);
-            }
+//            if(isset($link['state'])) {
+//                $name .= library_tag_get_count_state($link['state']);
+//            }
         ?>
             <div<?php echo $class_attr; ?>><a data-path="<?php echo $uri_current; ?>" href="<?php echo $link['url']; ?>"><?php echo $name; ?></a></div>
         <?php endforeach; ?>
@@ -103,12 +104,7 @@ Box::getInstance()->register('cab-head', function () {
 
 add_action('cab-head', function () {
 
-//    ob_start();
     Box::getInstance()->resolve('cab-head');
-
-//    $head = ob_get_clean();
-
-//    iti_bl_panel($head);
 
 });
 
