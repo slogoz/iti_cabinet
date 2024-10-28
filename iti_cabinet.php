@@ -82,3 +82,9 @@ if ( true ) {
         include(WP_ITI_CABINET_DIR . '/templates/cabinet-svg.php');
     }
 }
+
+add_action('template_redirect', function() {
+    if (is_user_logged_in()) {
+        header_remove('Last-Modified');
+    }
+}, 1000); // Для отключения заголовка, который на `999` отдаёт плагин Clearfy

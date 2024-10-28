@@ -106,6 +106,7 @@ function template_modal_state_script()
 
                 $('.post-cards').on('click', '.iti-but--library', stateActive);
                 $('.lib-but-state-container .iti-but--library').on('click', stateActive);
+                $('.iti-cabinet-content .iti-but--library').on('click', stateActive);
 
                 function updateButtons(state, caption) {
                     $butsAction.text(caption);
